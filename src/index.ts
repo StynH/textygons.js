@@ -216,6 +216,14 @@ export class Textygons {
         window.onresize = this.resizeFunction;
     }
 
+    resizeFunction(event: any | null): void{
+        this.canvas.element.width = this.canvas.element.parentElement!.clientWidth;
+        this.canvas.element.height = this.canvas.element.parentElement!.clientHeight;
+
+        this.canvas.width = this.canvas.context.canvas.width;
+        this.canvas.height = this.canvas.context.canvas.height;
+    };
+
     start(): void{
         this.resizeFunction(null);
         this.clearCanvas();
@@ -423,14 +431,6 @@ export class Textygons {
             }
         }
         return source;
-    };
-
-    resizeFunction(event: any | null): void{
-        this.canvas.element.width = this.canvas.element.parentElement!.clientWidth;
-        this.canvas.element.height = this.canvas.element.parentElement!.clientHeight;
-
-        this.canvas.width = this.canvas.context.canvas.width;
-        this.canvas.height = this.canvas.context.canvas.height;
     };
 
     static loadCanvas(canvasId: string): Canvas{
