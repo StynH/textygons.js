@@ -417,12 +417,7 @@ export class Textygons {
         }
         return true;
     }
-
-    static getCanvasSize(canvasId: string): Dimensions{
-        const c = <HTMLCanvasElement>document.getElementById(canvasId);
-        return { width: c.offsetWidth, height: c.offsetHeight };
-    }
-
+    
     static extendDefaults(source: any, properties: any): Options{
         let property;
         for (property in properties) {
