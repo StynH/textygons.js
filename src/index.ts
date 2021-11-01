@@ -41,6 +41,7 @@ type Options = {
     maxSpacing: number;
     pointSize: number;
     fps: number;
+    sequential: boolean;
 }
 
 type DisplayableText = {
@@ -200,7 +201,8 @@ export class Textygons {
             edgeFadeTime: 500,
             maxSpacing: 10,
             pointSize: 3,
-            fps: 144
+            fps: 144,
+            sequential: true
         }
 
         if (arguments[0] && typeof arguments[0] === "object") {
@@ -329,7 +331,15 @@ export class Textygons {
     }
 
     setNewText(): void{
-        this.currentText = this.currentText + 1 >= this.displayableTexts.length ? 0 : this.currentText + 1;
+        if(this.options.sequential){
+            this.currentText = this.currentText + 1 >= this.displayableTexts.length ? 0 : this.currentText + 1;
+        }
+        else{
+            const oldText = this.currentText;
+            while(this.currentText == oldText){
+                this.currentText = Textygons.randomIntBetween(0, this.displayableTexts.length - 1);
+            }
+        }
     }
 
     resetEdgeColors(displayableText: DisplayableText) {
@@ -417,7 +427,7 @@ export class Textygons {
         }
         return true;
     }
-    
+
     static extendDefaults(source: any, properties: any): Options{
         let property;
         for (property in properties) {
