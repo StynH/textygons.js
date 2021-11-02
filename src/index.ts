@@ -170,8 +170,10 @@ class Edge{
 
 //By Styn van de Haterd @ 2021
 export class Textygons {
+    private static readonly POINT_SPEED: number = 0.3;
+
     private state: State;
-    private deltaTime: DeltaTime;
+    private timer: DeltaTime;
     private options: Options;
     private canvas: Canvas;
     private displayableTexts: DisplayableText[];
@@ -182,7 +184,7 @@ export class Textygons {
 
     constructor() {
         this.state = State.DISPLAYING;
-        this.deltaTime = new DeltaTime();
+        this.timer = new DeltaTime();
         this.displayableTexts = [];
         this.currentText = 0;
         this.lemmings = [];
@@ -241,7 +243,7 @@ export class Textygons {
     }
 
     update(): void{
-        this.deltaTime.update();
+        this.timer.update();
         if(this.state == State.DISPLAYING){
             this.clearCanvas();
             this.updateEdges();
@@ -255,7 +257,7 @@ export class Textygons {
             this.drawPoints();
             this.checkState();
         }
-        this.stateTimer += this.deltaTime.deltaTime;
+        this.stateTimer += this.timer.deltaTime;
     }
 
     createGraphFromText(textString: TextString): any{
@@ -303,7 +305,7 @@ export class Textygons {
 
     updatePoints(): void{
         _.forEach(this.lemmings, (point) => {
-            point.moveTowardsDestination(1.75);
+            point.moveTowardsDestination(Textygons.POINT_SPEED * this.timer.deltaTime);
         });
     }
 
